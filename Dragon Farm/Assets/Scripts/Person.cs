@@ -1,9 +1,12 @@
-﻿public abstract class Person
+﻿using System.Collections.Generic;
+
+public abstract class Person
 {
     public string name;
     public Stats originalStats;
 
-    public abstract Stats Stats();
+    public abstract Stats GetStats();
+    public abstract List<Gear> GetGears();
 }
 
 public class Warrior: Person
@@ -13,8 +16,12 @@ public class Warrior: Person
         name = _name;
         originalStats = _stats;
     }
-    public override Stats Stats() {
+    public override Stats GetStats() {
         return originalStats;
+    }
+    public override List<Gear> GetGears()
+    {
+        return new List<Gear>();
     }
 }
 
@@ -27,25 +34,35 @@ public abstract class Decorator : Person
         person = _person;
     }
 
-    public override Stats Stats()
+    public override Stats GetStats()
     {
-        return person.Stats();
+        return person.GetStats();
+    }
+
+    public override List<Gear> GetGears()
+    {
+        return person.GetGears();
     }
 }
 
 class PersonwithGear : Decorator
 {
-    string gearName;
-    public Stats gearStats;
-
+    Gear gear;
     public PersonwithGear(Person _person, string _name, Stats _stats): base(_person)
     {
-        gearName = _name;
-        gearStats = _stats;
+        gear.name = _name;
+        gear.stats = _stats;
     }
-    public override Stats Stats()
+
+    public override Stats GetStats()
     {
-        return base.Stats() + gearStats;
+        return base.GetStats() + gear.stats;
+    }
+    public override List<Gear> GetGears()
+    {
+        List<Gear> list = base.GetGears();
+        list.Add(gear);
+        return list;
     }
 }
 
@@ -76,4 +93,10 @@ public struct Stats
         a.intelligence += b.intelligence;
         return a;
     }
+}
+
+public struct Gear
+{
+    public string name;
+    public Stats stats;
 }
