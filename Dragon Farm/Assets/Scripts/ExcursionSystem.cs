@@ -17,11 +17,13 @@ public class ExcursionSystem : MonoBehaviour
     public GameObject newExcursion;
     public List<Person> partyMembers = new List<Person>();
 
-    int i = 0;
+    public float partyStrength;
 
     // Start is called before the first frame update
     void Start()
     {
+        partyStrength = 1;
+
         GenerateExcursion();
 
         AddEmptyPartyMember();
@@ -33,8 +35,6 @@ public class ExcursionSystem : MonoBehaviour
         {
             child.gameObject.SetActive(!child.gameObject.activeSelf);
         }
-
-
     }
 
     private void AddEmptyPartyMember()
@@ -65,7 +65,7 @@ public class ExcursionSystem : MonoBehaviour
         {
             foreach (Gear g in p.GetGears())
             {
-                gearInfo.GetChild(1).GetComponent<TextMeshProUGUI>().text = g.name + i++;
+                gearInfo.GetChild(1).GetComponent<TextMeshProUGUI>().text = g.name;
             }
         }
         else
@@ -78,31 +78,100 @@ public class ExcursionSystem : MonoBehaviour
 
     private void GenerateExcursion()
     {
-        foreach (int i in new List<int>(5) { 1,1,1,1,1})
+        List<Excursion> missions = RandomExcursions();
+
+        foreach (Excursion excursion in missions)
         {
             ExcursionsContainer.sizeDelta += new Vector2(0, 200);
             GameObject addedExcursion = Instantiate(newExcursion, ExcursionsContainer);
             addedExcursion.transform.localPosition += new Vector3(0, ExcursionsContainer.sizeDelta.y, 0);
 
-            string name = "Cave";
-            float winchance = 10.5f;
-
-            addedExcursion.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
-            addedExcursion.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = winchance.ToString() + "%";
+            addedExcursion.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = excursion.name;
+            addedExcursion.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = excursion.WinChance(partyStrength).ToString() + "%";
 
             Transform rewardContainer = addedExcursion.transform.GetChild(2).GetChild(0).GetChild(0);
 
-            foreach (int j in new List<int>(5) { 1,1,1,1,1})
+            foreach (Reward reward in excursion.rewards)
             {
-                GameObject Reward = Instantiate(new GameObject("Reward", typeof(RectTransform)), rewardContainer);
-                Reward.AddComponent<TextMeshProUGUI>().text = "Dragon";
-                Reward.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
-                Reward.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 75);
-                Reward.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0);
-                Reward.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0);
+                GameObject rewardText = Instantiate(new GameObject("Reward", typeof(RectTransform)), rewardContainer);
+                rewardText.AddComponent<TextMeshProUGUI>();
+                rewardText.GetComponent<TextMeshProUGUI>().text = reward.name;
+                rewardText.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
+                rewardText.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 75);
+                rewardText.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0);
+                rewardText.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0);
                 rewardContainer.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 75);
-                Reward.GetComponent<RectTransform>().localPosition = new Vector2(0, 0);
+                rewardText.GetComponent<RectTransform>().localPosition = new Vector2(0, -37.5f);
             }
+        }
+    }
+
+    private List<Excursion> RandomExcursions()
+    {
+        List<Excursion> excursions = new List<Excursion>();
+
+        for (int i = 0; i < Random.Range(1, 10); i++)
+        {
+            excursions.Add(new Excursion(5));
+        }
+
+        return excursions;
+    }
+
+    public struct Excursion
+    {
+        public string name;
+        public float difficulty;
+        public List<Reward> rewards;
+        
+        public float WinChance(float partyStrength)
+        {            
+            return difficulty / partyStrength;
+        }
+
+        public Excursion(int maxLevel)
+        {
+            name = "Cave";
+            difficulty = Random.Range(1, maxLevel);
+            rewards = new List<Reward>();
+            for (int i = 0;i< difficulty; i++)
+            {
+                rewards.Add(new Dragon());
+            }
+        }
+    }
+
+    public abstract class Reward
+    {
+        public string name;
+    }
+
+    public class Resource : Reward
+    {
+        int amount;
+    }
+
+    public class Iron : Resource
+    {
+        public Iron()
+        {
+            name ="iron";
+        }
+    }
+
+    public class Wood : Resource
+    {
+        public Wood()
+        {
+            name = "wood";
+        }
+    }
+
+    public class Dragon : Reward
+    {
+        public Dragon()
+        {
+            name = "Drogon";
         }
     }
 }

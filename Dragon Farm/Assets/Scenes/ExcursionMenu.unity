@@ -685,8 +685,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1450086072}
   m_HandleRect: {fileID: 1450086071}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.966
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1328,6 +1328,9 @@ MonoBehaviour:
   ExcursionsContainer: {fileID: 1987860520}
   newPartyMember: {fileID: 4814810535893836427, guid: ac7619d21ff99c94bb398ebada06c8bc,
     type: 3}
+  newExcursion: {fileID: 4814810535893836427, guid: eabb85e1e90864244a7aae09ff3bab50,
+    type: 3}
+  partyStrength: 0
 --- !u!1 &1223635964
 GameObject:
   m_ObjectHideFlags: 0
@@ -2015,7 +2018,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 500}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2015457060
 GameObject:
