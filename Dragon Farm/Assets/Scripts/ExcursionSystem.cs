@@ -26,6 +26,8 @@ public class ExcursionSystem : MonoBehaviour
 
         GenerateExcursion();
 
+        transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Summit";
+
         AddEmptyPartyMember();
     }
 
@@ -172,6 +174,7 @@ public class ExcursionSystem : MonoBehaviour
         public Dragon()
         {
             name = "Drogon";
+
         }
     }
 }
