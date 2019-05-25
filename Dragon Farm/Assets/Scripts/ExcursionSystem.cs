@@ -11,10 +11,10 @@ public class ExcursionSystem : MonoBehaviour
     UnityEvent AddGearEvent = new UnityEvent();
 
     public RectTransform partyMemberContainer;
-    public Transform ExcursionsContainer;
+    public RectTransform ExcursionsContainer;
 
     public GameObject newPartyMember;
-
+    public GameObject newExcursion;
     public List<Person> partyMembers = new List<Person>();
 
     int i = 0;
@@ -22,13 +22,9 @@ public class ExcursionSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AddEmpty();
-    }
+        GenerateExcursion();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        AddEmptyPartyMember();
     }
 
     private void ToggleAdd(Transform info)
@@ -41,7 +37,7 @@ public class ExcursionSystem : MonoBehaviour
 
     }
 
-    private void AddEmpty()
+    private void AddEmptyPartyMember()
     {
         GameObject addedPartyMember = Instantiate(newPartyMember, partyMemberContainer);
         addedPartyMember.transform.localPosition += new Vector3(0, -partyMemberContainer.sizeDelta.y, 0);
@@ -51,13 +47,11 @@ public class ExcursionSystem : MonoBehaviour
         ToggleAdd(personInfo);
         ToggleAdd(gearInfo);
 
-        personInfo.GetComponentInChildren<Button>().onClick.AddListener(() => EnterValues(addedPartyMember));
-        partyMemberContainer.sizeDelta += new Vector2(0, 200);
-
-        
+        personInfo.GetComponentInChildren<Button>().onClick.AddListener(() => EnterPartyMemberValues(addedPartyMember));
+        partyMemberContainer.sizeDelta += new Vector2(0, 200);        
     }
 
-    private void EnterValues(GameObject obj)
+    private void EnterPartyMemberValues(GameObject obj)
     {
         Person p = new PersonwithGear(new Warrior("John Doe", new Stats(2, 4, 5)), "Strong Armor", new Stats(1, 0, 1));
 
@@ -79,6 +73,36 @@ public class ExcursionSystem : MonoBehaviour
             ToggleAdd(gearInfo);
         }
 
-        AddEmpty();
+        AddEmptyPartyMember();
+    }
+
+    private void GenerateExcursion()
+    {
+        foreach (int i in new List<int>(5) { 1,1,1,1,1})
+        {
+            ExcursionsContainer.sizeDelta += new Vector2(0, 200);
+            GameObject addedExcursion = Instantiate(newExcursion, ExcursionsContainer);
+            addedExcursion.transform.localPosition += new Vector3(0, ExcursionsContainer.sizeDelta.y, 0);
+
+            string name = "Cave";
+            float winchance = 10.5f;
+
+            addedExcursion.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
+            addedExcursion.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = winchance.ToString() + "%";
+
+            Transform rewardContainer = addedExcursion.transform.GetChild(2).GetChild(0).GetChild(0);
+
+            foreach (int j in new List<int>(5) { 1,1,1,1,1})
+            {
+                GameObject Reward = Instantiate(new GameObject("Reward", typeof(RectTransform)), rewardContainer);
+                Reward.AddComponent<TextMeshProUGUI>().text = "Dragon";
+                Reward.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
+                Reward.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 75);
+                Reward.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0);
+                Reward.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0);
+                rewardContainer.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 75);
+                Reward.GetComponent<RectTransform>().localPosition = new Vector2(0, 0);
+            }
+        }
     }
 }
