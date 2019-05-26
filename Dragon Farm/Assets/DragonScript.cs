@@ -17,6 +17,8 @@ public class DragonScript : MonoBehaviour
     float rotationSpeed;
     float gravity;
 
+    GameObject fire;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,9 @@ public class DragonScript : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         image = GetComponentInChildren<Image>();
+
+        fire = GetComponentInChildren<ParticleSystem>().gameObject;
+        fire.SetActive(false);
     }
 
     // Update is called once per frame
@@ -36,6 +41,7 @@ public class DragonScript : MonoBehaviour
         if (rechargeTimer > durability)
         {
             animator.SetBool("BreatheFire", true);
+            fire.SetActive(true);
             rechargeTimer = 0;
         }
 
