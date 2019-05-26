@@ -1319,6 +1319,7 @@ GameObject:
   - component: {fileID: 2553488707222698241}
   - component: {fileID: 5963846763792905913}
   - component: {fileID: 8614409539961899732}
+  - component: {fileID: 9201430948472821368}
   m_Layer: 5
   m_Name: Resources
   m_TagString: Untagged
@@ -1387,6 +1388,23 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &9201430948472821368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7773018309107014932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239d3bf540a192241abbb085b3318022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountDragons: {fileID: 4914414791625878494}
+  amountPeople: {fileID: 4527083712398066950}
+  amountFood: {fileID: 5983329186214196809}
+  amountWood: {fileID: 6968756842640950004}
+  amountMetal: {fileID: 6040507839510798332}
 --- !u!1 &7894099860217410882
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,14 +5,19 @@
 
 public class Resource : Reward
 {
-    int amount;
-}
+    public int amount;
 
-public class Iron : Resource
-{
-    public Iron()
+    public static Resource operator +(Resource a, Resource b)
     {
-        name = "iron";
+        a.amount += b.amount;
+        return a;
+    }
+}
+public class Metal : Resource
+{
+    public Metal()
+    {
+        name = "Metal";
     }
 }
 
@@ -20,6 +25,14 @@ public class Wood : Resource
 {
     public Wood()
     {
-        name = "wood";
+        name = "Wood";
+    }
+}
+
+public class Food : Resource
+{
+    public Food()
+    {
+        name = "Food";
     }
 }
