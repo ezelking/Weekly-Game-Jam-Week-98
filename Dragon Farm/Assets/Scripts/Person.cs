@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class Person
 {
     public string name;
     public Stats originalStats;
+
+    public GameObject character;
 
     public abstract Stats GetStats();
     public abstract List<Gear> GetGears();
@@ -15,8 +18,45 @@ public class Warrior: Person
     {
         name = _name;
         originalStats = _stats;
+        character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_male_A", typeof(GameObject)));
     }
     public override Stats GetStats() {
+        return originalStats;
+    }
+    public override List<Gear> GetGears()
+    {
+        return new List<Gear>();
+    }
+}
+
+public class Cook : Person
+{
+    public Cook(string _name, Stats _stats)
+    {
+        name = _name;
+        originalStats = _stats;
+        character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_female", typeof(GameObject)));
+    }
+    public override Stats GetStats()
+    {
+        return originalStats;
+    }
+    public override List<Gear> GetGears()
+    {
+        return new List<Gear>();
+    }
+}
+
+public class WoodChopper : Person
+{
+    public WoodChopper(string _name, Stats _stats)
+    {
+        name = _name;
+        originalStats = _stats;
+        character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_male_B", typeof(GameObject)));
+    }
+    public override Stats GetStats()
+    {
         return originalStats;
     }
     public override List<Gear> GetGears()
@@ -64,15 +104,6 @@ class PersonwithGear : Decorator
         list.Add(gear);
         return list;
     }
-}
-
-public enum CharacterClasses
-{
-    Explorer,
-    Hunter,
-    Wood_Chopper,
-    Smith,
-    Cook
 }
 
 public struct Stats

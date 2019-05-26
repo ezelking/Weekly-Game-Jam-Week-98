@@ -19,6 +19,8 @@ public class test : MonoBehaviour
         food.amount = 5;
 
         ResourceManager.Instance.AddResource(food);
+
+        ResourceManager.Instance.AddPerson( new Warrior("John", new Stats(1,1,1)));
     }
 }
 

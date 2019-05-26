@@ -55,6 +55,16 @@ public sealed class ResourceManager
         wood += w;
     }
 
+    public void AddPerson(Person p)
+    {
+        people.Add(p);
+    }
+
+    public void AddDragon(Dragon d)
+    {
+        dragons.Add(d);
+    }
+
     public int[] GetResourceAmounts()
     {
         return new int[5]{ dragons.Count,people.Count, food.amount, wood.amount, metal.amount };
