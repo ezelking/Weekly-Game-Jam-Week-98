@@ -108,6 +108,11 @@ public class ExcursionSystem : MonoBehaviour
         }
     }
 
+    public void ShutWindow()
+    {
+        gameObject.SetActive(false);
+    }
+
     private List<Excursion> RandomExcursions()
     {
         List<Excursion> excursions = new List<Excursion>();

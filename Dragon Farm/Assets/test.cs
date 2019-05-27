@@ -20,7 +20,7 @@ public class test : MonoBehaviour
 
         ResourceManager.Instance.AddResource(food);
 
-        ResourceManager.Instance.AddPerson( new Warrior("John", new Stats(1,1,1)));
+        ResourceManager.Instance.AddPerson(new Warrior("John", new Stats(1,1,1)));
     }
 }
 
