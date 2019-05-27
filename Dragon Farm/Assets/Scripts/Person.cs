@@ -19,6 +19,7 @@ public class Warrior: Person
         name = _name;
         originalStats = _stats;
         character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_male_A", typeof(GameObject)));
+        character.transform.position = new Vector3(1, -3, -45);
     }
     public override Stats GetStats() {
         return originalStats;
