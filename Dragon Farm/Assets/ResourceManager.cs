@@ -65,6 +65,14 @@ public sealed class ResourceManager
         dragons.Add(d);
     }
 
+    public void KillDragons()
+    {
+        foreach(Dragon dragon in dragons)
+        {
+            dragon.dragon.GetComponent<DragonScript>().Kill();
+        }
+    }
+
     public int[] GetResourceAmounts()
     {
         return new int[5]{ dragons.Count,people.Count, food.amount, wood.amount, metal.amount };

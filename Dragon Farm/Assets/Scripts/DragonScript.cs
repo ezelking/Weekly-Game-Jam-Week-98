@@ -16,7 +16,7 @@ public class DragonScript : MonoBehaviour
     public float speed;
     float rotationSpeed;
     float gravity;
-
+    bool die = false;
     GameObject fire;
 
     // Start is called before the first frame update
@@ -47,6 +47,13 @@ public class DragonScript : MonoBehaviour
 
         animator.SetFloat("Speed", speed);
         controller.Move(transform.forward *speed* Time.deltaTime);
+            animator.SetBool("Die", die);
+            die = false;
+    }
 
+    public void Kill()
+    {
+        die = true;
+        image.gameObject.SetActive(false);
     }
 }

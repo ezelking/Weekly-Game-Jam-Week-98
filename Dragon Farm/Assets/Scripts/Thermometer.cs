@@ -44,10 +44,17 @@ public sealed class Thermometer
 
     public static Thermometer operator --(Thermometer a)
     {
-        a.tempurature -= Time.deltaTime;
-        if (a.tempurature > maxTemp)
+        if (a.tempurature > minTemp)
         {
-            //IMPLEMENT LOSE CONDITION
+            a.tempurature -= Time.deltaTime;
+            if (a.tempurature <= minTemp)
+            {
+                ResourceManager.Instance.KillDragons();
+                foreach (Transform UIelement in GameObject.Find("UI").transform)
+                {
+                    UIelement.gameObject.SetActive(!UIelement.gameObject.activeSelf);
+                }
+            }
         }
         return a;
     }
