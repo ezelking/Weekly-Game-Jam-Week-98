@@ -32,7 +32,6 @@ public class CharacterSelectionScript : MonoBehaviour
             choices[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = people[i].originalStats.ToString();
             int selected = i;
             choices[i].GetComponent<Button>().onClick.AddListener(() => selectPerson(selected));
-            Debug.Log(i);
         }
     }
 
@@ -68,7 +67,6 @@ public class CharacterSelectionScript : MonoBehaviour
 
     public void selectPerson(int _selectedPerson)
     {
-        Debug.Log(_selectedPerson);
         Color selected = new Color(0, 1, 0, 100f / 255f);
         Color notSelected = new Color(1, 1, 1, 100f / 255f);
 
