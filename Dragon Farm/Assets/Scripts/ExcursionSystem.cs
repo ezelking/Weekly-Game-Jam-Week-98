@@ -12,12 +12,15 @@ public class ExcursionSystem : MonoBehaviour
 
     public RectTransform partyMemberContainer;
     public RectTransform ExcursionsContainer;
+    List<Excursion> activeMissions;
 
     public GameObject newPartyMember;
     public GameObject newExcursion;
     public List<Person> partyMembers = new List<Person>();
 
     public float partyStrength;
+
+    private Excursion selectedExcursion;
 
     // Start is called before the first frame update
     void Start()
@@ -80,24 +83,23 @@ public class ExcursionSystem : MonoBehaviour
 
     private void GenerateExcursion()
     {
-        List<Excursion> missions = RandomExcursions();
+        activeMissions = RandomExcursions();
 
-        foreach (Excursion excursion in missions)
+        foreach (Excursion excursion in activeMissions)
         {
-            ExcursionsContainer.sizeDelta += new Vector2(0, 200);
-            GameObject addedExcursion = Instantiate(newExcursion, ExcursionsContainer);
-            addedExcursion.transform.localPosition += new Vector3(0, ExcursionsContainer.sizeDelta.y, 0);
 
-            addedExcursion.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = excursion.name;
-            addedExcursion.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = excursion.WinChance(partyStrength).ToString() + "%";
-
-            Transform rewardContainer = addedExcursion.transform.GetChild(2).GetChild(0).GetChild(0);
+            Transform rewardContainer = excursion.UIelement.transform.GetChild(2).GetChild(0).GetChild(0);
 
             foreach (Reward reward in excursion.rewards)
             {
-                GameObject rewardText = Instantiate(new GameObject("Reward", typeof(RectTransform)), rewardContainer);
+                GameObject rewardText = new GameObject("Reward", typeof(RectTransform));
+                rewardText.transform.SetParent(rewardContainer);
                 rewardText.AddComponent<TextMeshProUGUI>();
                 rewardText.GetComponent<TextMeshProUGUI>().text = reward.name;
+                if (reward.GetType().IsSubclassOf(typeof(Resource)))
+                {
+                    rewardText.GetComponent<TextMeshProUGUI>().text += " X " + ((Resource)reward).amount;
+                }
                 rewardText.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
                 rewardText.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 75);
                 rewardText.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0);
@@ -113,13 +115,50 @@ public class ExcursionSystem : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void ConfirmSelection()
+    {
+        foreach (Reward reward in selectedExcursion.rewards)
+        {
+            ResourceManager.Instance.AddReward(reward);
+        }
+        gameObject.SetActive(false);
+    }
+
+    public void selectExcursion(GameObject _selectedExcursion)
+    {
+        Color selected = new Color(0, 1, 0, 100f/255f);
+        Color notSelected = new Color(1, 1, 1, 100f/255f);
+
+        if (selectedExcursion.UIelement != null)
+        selectedExcursion.UIelement.GetComponent<Image>().color = notSelected;
+
+        foreach (Excursion excursion in activeMissions)
+        {
+            if (excursion.UIelement == _selectedExcursion)
+            {
+                selectedExcursion = excursion;
+            }
+        }
+
+        selectedExcursion.UIelement.GetComponent<Image>().color = selected;
+    }
+
     private List<Excursion> RandomExcursions()
     {
         List<Excursion> excursions = new List<Excursion>();
 
         for (int i = 0; i < Random.Range(1, 10); i++)
         {
-            excursions.Add(new Excursion(5));
+            ExcursionsContainer.sizeDelta += new Vector2(0, 200);
+            GameObject addedExcursion = Instantiate(newExcursion, ExcursionsContainer);
+            addedExcursion.GetComponent<Button>().onClick.AddListener(() => selectExcursion(addedExcursion));
+            addedExcursion.transform.localPosition += new Vector3(0, ExcursionsContainer.sizeDelta.y, 0);
+            Excursion excursion = new Excursion(5, addedExcursion);
+
+            addedExcursion.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = excursion.name;
+            addedExcursion.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = excursion.WinChance(partyStrength).ToString() + "%";
+            //excursion.UIelement = addedExcursion;
+            excursions.Add(excursion);
         }
 
         return excursions;
@@ -130,21 +169,39 @@ public class ExcursionSystem : MonoBehaviour
         public string name;
         public float difficulty;
         public List<Reward> rewards;
-        
+
+        public GameObject UIelement;
+
         public float WinChance(float partyStrength)
         {            
             return difficulty / partyStrength;
         }
 
-        public Excursion(int maxLevel)
+        public Excursion(int maxLevel, GameObject _UIelement)
         {
             name = "Cave";
             difficulty = Random.Range(1, maxLevel);
             rewards = new List<Reward>();
-            for (int i = 0;i< difficulty; i++)
+            for (int i = 0; i < difficulty; i++)
             {
-                rewards.Add(new Dragon());
+                switch (Random.Range(0, 4)) {
+
+                    case 0:
+                        rewards.Add(new Dragon());
+                        break;
+                    case 1:
+                        rewards.Add(new Wood(Random.Range(1,10)));
+                        break;
+                    case 2:
+                        rewards.Add(new Metal(Random.Range(1, 10)));
+                        break;
+                    case 3:
+                        rewards.Add(new Food(Random.Range(1, 10)));
+                        break;
+
+                }
             }
+            UIelement = _UIelement;
         }
     }
 }

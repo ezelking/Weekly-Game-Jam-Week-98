@@ -14,9 +14,7 @@ public class test : MonoBehaviour
         p =new PersonwithGear(p, "Strong Armor", new Stats(1, 0, 1));
         Debug.Log(p.Stats().health);
         Debug.Log(pWithGear.Stats().health);*/
-        Food food = new Food();
-
-        food.amount = 5;
+        Food food = new Food(5);
 
         ResourceManager.Instance.AddResource(food);
 

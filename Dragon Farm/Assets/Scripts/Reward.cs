@@ -15,24 +15,27 @@ public class Resource : Reward
 }
 public class Metal : Resource
 {
-    public Metal()
+    public Metal(int _amount)
     {
         name = "Metal";
+        amount = _amount;
     }
 }
 
 public class Wood : Resource
 {
-    public Wood()
+    public Wood(int _amount)
     {
         name = "Wood";
+        amount = _amount;
     }
 }
 
 public class Food : Resource
 {
-    public Food()
+    public Food(int _amount)
     {
         name = "Food";
+        amount = _amount;
     }
 }

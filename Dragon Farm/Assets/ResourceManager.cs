@@ -14,9 +14,9 @@ public sealed class ResourceManager
 
     ResourceManager()
     {
-        wood = new Wood();
-        metal = new Metal();
-        food = new Food();
+        wood = new Wood(0);
+        metal = new Metal(0);
+        food = new Food(0);
 
         food.amount = 0;
 
@@ -58,6 +58,29 @@ public sealed class ResourceManager
     public void AddPerson(Person p)
     {
         people.Add(p);
+    }
+
+    public void AddReward(Reward r)
+    {
+        if (r.GetType() == typeof(Dragon))
+        {
+            AddDragon((Dragon)r);
+            ((Dragon)r).Spawn();
+        } /*else if (r.GetType() == typeof(Person))
+        {
+            AddPerson((Person)r);
+        }*/
+        else if(r.GetType() == typeof(Metal))
+        {
+            AddResource((Metal)r);
+        } else if (r.GetType() == typeof(Food))
+        {
+            AddResource((Food)r);
+        }
+        else if(r.GetType() == typeof(Wood))
+        {
+            AddResource((Wood)r);
+        } 
     }
 
     public void AddDragon(Dragon d)

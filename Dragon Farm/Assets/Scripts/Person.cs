@@ -10,6 +10,8 @@ public abstract class Person
 
     public abstract Stats GetStats();
     public abstract List<Gear> GetGears();
+
+    public abstract void Spawn();
 }
 
 public class Warrior: Person
@@ -18,8 +20,6 @@ public class Warrior: Person
     {
         name = _name;
         originalStats = _stats;
-        character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_male_A", typeof(GameObject)));
-        character.transform.position = new Vector3(1, -3, -45);
     }
     public override Stats GetStats() {
         return originalStats;
@@ -27,6 +27,12 @@ public class Warrior: Person
     public override List<Gear> GetGears()
     {
         return new List<Gear>();
+    }
+
+    public override void Spawn()
+    {
+        character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_male_A", typeof(GameObject)));
+        character.transform.position = new Vector3(1, -3, -45);
     }
 }
 
@@ -36,7 +42,6 @@ public class Cook : Person
     {
         name = _name;
         originalStats = _stats;
-        character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_female", typeof(GameObject)));
     }
     public override Stats GetStats()
     {
@@ -45,6 +50,11 @@ public class Cook : Person
     public override List<Gear> GetGears()
     {
         return new List<Gear>();
+    }
+    public override void Spawn()
+    {
+        character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_female", typeof(GameObject)));
+        character.transform.position = new Vector3(1, -3, -45);
     }
 }
 
@@ -54,7 +64,6 @@ public class WoodChopper : Person
     {
         name = _name;
         originalStats = _stats;
-        character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_male_B", typeof(GameObject)));
     }
     public override Stats GetStats()
     {
@@ -63,6 +72,11 @@ public class WoodChopper : Person
     public override List<Gear> GetGears()
     {
         return new List<Gear>();
+    }
+    public override void Spawn()
+    {
+        character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_male_B", typeof(GameObject)));
+        character.transform.position = new Vector3(1, -3, -45);
     }
 }
 
@@ -83,6 +97,11 @@ public abstract class Decorator : Person
     public override List<Gear> GetGears()
     {
         return person.GetGears();
+    }
+
+    public override void Spawn()
+    {
+        person.Spawn();
     }
 }
 
