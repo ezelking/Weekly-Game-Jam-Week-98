@@ -58,9 +58,9 @@ public class Cook : Person
     }
 }
 
-public class WoodChopper : Person
+public class Smith : Person
 {
-    public WoodChopper(string _name, Stats _stats)
+    public Smith(string _name, Stats _stats)
     {
         name = _name;
         originalStats = _stats;
@@ -143,6 +143,11 @@ public struct Stats
         a.strength += b.strength;
         a.intelligence += b.intelligence;
         return a;
+    }
+
+    public override string ToString()
+    {
+        return health + " | " + strength + " | " + intelligence; 
     }
 }
 
