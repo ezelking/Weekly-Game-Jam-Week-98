@@ -15,7 +15,7 @@ public class CharacterSelectionScript : MonoBehaviour
         people = new List<Person>(); 
         for (int i = 0; i < 3; i++)
         {
-            switch (Random.Range(0, 3))
+            switch (Random.Range(0, 4))
             {
                 case 0:
                     people.Add(new Warrior("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3))));
@@ -25,6 +25,9 @@ public class CharacterSelectionScript : MonoBehaviour
                     break;
                 case 2:
                     people.Add(new Smith("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3))));
+                    break;
+                case 3:
+                    people[selectedPerson] = new Carpenter("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3)));
                     break;
             }
             choices[i].transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = people[i].name;
@@ -44,7 +47,7 @@ public class CharacterSelectionScript : MonoBehaviour
     public void ConfirmSelection()
     {
         people[selectedPerson].Spawn();
-        switch (Random.Range(0, 3))
+        switch (Random.Range(0, 4))
         {
             case 0:
                 people[selectedPerson] = new Warrior("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3)));
@@ -54,6 +57,9 @@ public class CharacterSelectionScript : MonoBehaviour
                 break;
             case 2:
                 people[selectedPerson] = new Smith("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3)));
+                break;
+            case 3:
+                people[selectedPerson] = new Carpenter("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3)));
                 break;
         }
 

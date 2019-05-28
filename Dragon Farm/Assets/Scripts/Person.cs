@@ -36,7 +36,29 @@ public class Warrior: Person
         ResourceManager.Instance.AddPerson(this);
     }
 }
+public class Carpenter : Person
+{
+    public Carpenter(string _name, Stats _stats)
+    {
+        name = _name;
+        originalStats = _stats;
+    }
+    public override Stats GetStats()
+    {
+        return originalStats;
+    }
+    public override List<Gear> GetGears()
+    {
+        return new List<Gear>();
+    }
 
+    public override void Spawn()
+    {
+        character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_male_A", typeof(GameObject)));
+        character.transform.position = new Vector3(1, -3, -45);
+        ResourceManager.Instance.AddPerson(this);
+    }
+}
 public class Cook : Person
 {
     public Cook(string _name, Stats _stats)
