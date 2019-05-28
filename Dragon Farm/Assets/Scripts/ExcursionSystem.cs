@@ -84,30 +84,7 @@ public class ExcursionSystem : MonoBehaviour
     private void GenerateExcursion()
     {
         activeMissions = RandomExcursions();
-
-        foreach (Excursion excursion in activeMissions)
-        {
-
-            Transform rewardContainer = excursion.UIelement.transform.GetChild(2).GetChild(0).GetChild(0);
-
-            foreach (Reward reward in excursion.rewards)
-            {
-                GameObject rewardText = new GameObject("Reward", typeof(RectTransform));
-                rewardText.transform.SetParent(rewardContainer);
-                rewardText.AddComponent<TextMeshProUGUI>();
-                rewardText.GetComponent<TextMeshProUGUI>().text = reward.name;
-                if (reward.GetType().IsSubclassOf(typeof(Resource)))
-                {
-                    rewardText.GetComponent<TextMeshProUGUI>().text += " X " + ((Resource)reward).amount;
-                }
-                rewardText.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
-                rewardText.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 75);
-                rewardText.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0);
-                rewardText.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0);
-                rewardContainer.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 75);
-                rewardText.GetComponent<RectTransform>().localPosition = new Vector2(0, -37.5f);
-            }
-        }
+        
     }
 
     public void ShutWindow()
@@ -121,6 +98,7 @@ public class ExcursionSystem : MonoBehaviour
         {
             ResourceManager.Instance.AddReward(reward);
         }
+        selectedExcursion = new Excursion(5, selectedExcursion.UIelement);
         gameObject.SetActive(false);
     }
 
@@ -202,6 +180,32 @@ public class ExcursionSystem : MonoBehaviour
                 }
             }
             UIelement = _UIelement;
+
+            Transform rewardContainer = UIelement.transform.GetChild(2).GetChild(0).GetChild(0);
+
+            foreach (Transform child in rewardContainer)
+            {
+                GameObject.Destroy(child.gameObject);
+                rewardContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+            }
+
+            foreach (Reward reward in rewards)
+            {
+                GameObject rewardText = new GameObject("Reward", typeof(RectTransform));
+                rewardText.transform.SetParent(rewardContainer);
+                rewardText.AddComponent<TextMeshProUGUI>();
+                rewardText.GetComponent<TextMeshProUGUI>().text = reward.name;
+                if (reward.GetType().IsSubclassOf(typeof(Resource)))
+                {
+                    rewardText.GetComponent<TextMeshProUGUI>().text += " X " + ((Resource)reward).amount;
+                }
+                rewardText.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
+                rewardText.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 75);
+                rewardText.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0);
+                rewardText.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0);
+                rewardContainer.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 75);
+                rewardText.GetComponent<RectTransform>().localPosition = new Vector2(0, -37.5f);
+            }
         }
     }
 }

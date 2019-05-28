@@ -64,7 +64,6 @@ public sealed class ResourceManager
     {
         if (r.GetType() == typeof(Dragon))
         {
-            AddDragon((Dragon)r);
             ((Dragon)r).Spawn();
         } /*else if (r.GetType() == typeof(Person))
         {
