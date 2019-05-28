@@ -7,9 +7,6 @@ using UnityEngine.UI;
 
 public class ExcursionSystem : MonoBehaviour
 {
-    UnityEvent AddPersonEvent = new UnityEvent();
-    UnityEvent AddGearEvent = new UnityEvent();
-
     public RectTransform partyMemberContainer;
     public RectTransform ExcursionsContainer;
     List<Excursion> activeMissions;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Person
 {
-    public string name;
+    public string personName;
     public Stats originalStats;
 
     public GameObject character;
@@ -11,15 +11,28 @@ public abstract class Person
     public abstract Stats GetStats();
     public abstract List<Gear> GetGears();
 
+    public float recharge;
+
     public abstract void Spawn();
+
+    public bool actionAvailable()
+    {
+        return recharge < 0;
+    }
+
+    public void Recharge()
+    {
+        recharge -= Time.deltaTime;
+    }
 }
 
 public class Warrior: Person
 {
     public Warrior(string _name, Stats _stats)
     {
-        name = _name;
+        personName = _name;
         originalStats = _stats;
+        recharge = 30 -originalStats.health;
     }
     public override Stats GetStats() {
         return originalStats;
@@ -40,8 +53,9 @@ public class Carpenter : Person
 {
     public Carpenter(string _name, Stats _stats)
     {
-        name = _name;
+        personName = _name;
         originalStats = _stats;
+        recharge = 30 - originalStats.health;
     }
     public override Stats GetStats()
     {
@@ -63,8 +77,9 @@ public class Cook : Person
 {
     public Cook(string _name, Stats _stats)
     {
-        name = _name;
+        personName = _name;
         originalStats = _stats;
+        recharge = 30- originalStats.health;
     }
     public override Stats GetStats()
     {
@@ -86,8 +101,9 @@ public class Smith : Person
 {
     public Smith(string _name, Stats _stats)
     {
-        name = _name;
+        personName = _name;
         originalStats = _stats;
+        recharge = 30 - originalStats.health;
     }
     public override Stats GetStats()
     {

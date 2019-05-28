@@ -16,7 +16,7 @@ public class RandomNewArrival : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ResourceManager.Instance.people.Count < townLevel)
+        if (ResourceManager.Instance.people.Count < ResourceManager.Instance.populationLimit)
         {
             countDownTimer -= Time.deltaTime;
             if (countDownTimer < 0)
@@ -24,6 +24,11 @@ public class RandomNewArrival : MonoBehaviour
                 newArrivalPopUp.SetActive(true);
                 countDownTimer = 30f;
             }
+        }
+
+        foreach (Person p in ResourceManager.Instance.people)
+        {
+            p.Recharge();
         }
     }
 }

@@ -27,10 +27,10 @@ public class CharacterSelectionScript : MonoBehaviour
                     people.Add(new Smith("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3))));
                     break;
                 case 3:
-                    people[selectedPerson] = new Carpenter("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3)));
+                    people.Add(new Carpenter("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3))));
                     break;
             }
-            choices[i].transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = people[i].name;
+            choices[i].transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = people[i].personName;
             choices[i].transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = people[i].GetType().ToString();
             choices[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = people[i].originalStats.ToString();
             int selected = i;
@@ -63,7 +63,7 @@ public class CharacterSelectionScript : MonoBehaviour
                 break;
         }
 
-        choices[selectedPerson].transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = people[selectedPerson].name;
+        choices[selectedPerson].transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = people[selectedPerson].personName;
         choices[selectedPerson].transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = people[selectedPerson].GetType().ToString();
         choices[selectedPerson].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = people[selectedPerson].originalStats.ToString();
 

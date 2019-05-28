@@ -6,11 +6,13 @@ public sealed class ResourceManager
     private static ResourceManager instance = null;
     private static readonly object padlock = new object();
 
-    Resource wood;
-    Resource metal;
-    Resource food;
+    public Resource wood;
+    public Resource metal;
+    public Resource food;
     public List<Dragon> dragons;
     public List<Person> people;
+
+    public int populationLimit;
 
     ResourceManager()
     {
