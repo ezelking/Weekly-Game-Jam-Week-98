@@ -8,8 +8,17 @@ public abstract class Person
 
     public GameObject character;
 
-    public abstract Stats GetStats();
-    public abstract List<Gear> GetGears();
+    public Stats GetStats()
+    {
+        Stats gearTotal = new Stats();
+
+        foreach (Gear gear in gears)
+        {
+            gearTotal += gear.stats;
+        }
+        return originalStats + gearTotal;
+    }
+    public List<Gear> gears;
 
     public float recharge;
 
@@ -24,22 +33,21 @@ public abstract class Person
     {
         recharge -= Time.deltaTime;
     }
+
+    public void AddGear(Gear gear)
+    {
+        gears.Add(gear);
+    }
 }
 
 public class Warrior: Person
 {
-    public Warrior(string _name, Stats _stats)
+    public Warrior(string _name)
     {
         personName = _name;
-        originalStats = _stats;
+        originalStats = new Stats(true);
         recharge = 30 -originalStats.health;
-    }
-    public override Stats GetStats() {
-        return originalStats;
-    }
-    public override List<Gear> GetGears()
-    {
-        return new List<Gear>();
+        gears = new List<Gear>();
     }
 
     public override void Spawn()
@@ -49,23 +57,16 @@ public class Warrior: Person
         ResourceManager.Instance.AddPerson(this);
     }
 }
+
 public class Carpenter : Person
 {
-    public Carpenter(string _name, Stats _stats)
+    public Carpenter(string _name)
     {
         personName = _name;
-        originalStats = _stats;
+        originalStats = new Stats(true);
         recharge = 30 - originalStats.health;
+        gears = new List<Gear>();
     }
-    public override Stats GetStats()
-    {
-        return originalStats;
-    }
-    public override List<Gear> GetGears()
-    {
-        return new List<Gear>();
-    }
-
     public override void Spawn()
     {
         character = GameObject.Instantiate((GameObject)Resources.Load("ToonyTinyPeople/TT_demo/prefabs/TT_demo_male_A", typeof(GameObject)));
@@ -75,19 +76,12 @@ public class Carpenter : Person
 }
 public class Cook : Person
 {
-    public Cook(string _name, Stats _stats)
+    public Cook(string _name)
     {
         personName = _name;
-        originalStats = _stats;
+        originalStats = new Stats(true);
         recharge = 30- originalStats.health;
-    }
-    public override Stats GetStats()
-    {
-        return originalStats;
-    }
-    public override List<Gear> GetGears()
-    {
-        return new List<Gear>();
+        gears = new List<Gear>();
     }
     public override void Spawn()
     {
@@ -99,19 +93,12 @@ public class Cook : Person
 
 public class Smith : Person
 {
-    public Smith(string _name, Stats _stats)
+    public Smith(string _name)
     {
         personName = _name;
-        originalStats = _stats;
+        originalStats = new Stats(true);
         recharge = 30 - originalStats.health;
-    }
-    public override Stats GetStats()
-    {
-        return originalStats;
-    }
-    public override List<Gear> GetGears()
-    {
-        return new List<Gear>();
+        gears = new List<Gear>();
     }
     public override void Spawn()
     {
@@ -121,7 +108,7 @@ public class Smith : Person
     }
 }
 
-public abstract class Decorator : Person
+/*public abstract class Decorator : Person
 {
     protected Person person;
 
@@ -149,10 +136,10 @@ public abstract class Decorator : Person
 class PersonwithGear : Decorator
 {
     Gear gear;
-    public PersonwithGear(Person _person, string _name, Stats _stats): base(_person)
+
+    public PersonwithGear(Person _person, Gear _gear): base(_person)
     {
-        gear.name = _name;
-        gear.stats = _stats;
+        gear = _gear;
     }
 
     public override Stats GetStats()
@@ -165,18 +152,19 @@ class PersonwithGear : Decorator
         list.Add(gear);
         return list;
     }
-}
+}*/
 
 public struct Stats
 {
     public int health { get; set; }
     int strength { get; set; }
     int intelligence { get; set; }
-    public Stats(int _health, int _strength, int _intelligence)
+
+    public Stats(bool newStats)
     {
-        health = _health;
-        strength = _strength;
-        intelligence = _intelligence;
+        health = Random.Range(1,3);
+        strength = Random.Range(1, 3);
+        intelligence = Random.Range(1, 3);
     }
     public static Stats operator +(Stats a, Stats b)
     {
@@ -196,4 +184,10 @@ public struct Gear
 {
     public string name;
     public Stats stats;
+
+    public Gear(bool newGear)
+    {
+        name = "Helmet";
+        stats = new Stats(true);
+    }
 }

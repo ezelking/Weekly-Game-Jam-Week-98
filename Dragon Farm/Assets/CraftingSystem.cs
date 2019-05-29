@@ -88,7 +88,8 @@ public class CraftingSystem : MonoBehaviour
         {
             GameObject addedPerson = Instantiate(newPerson, peopleContainer);
             addedPerson.transform.localPosition += new Vector3(0, -peopleContainer.sizeDelta.y, 0);
-            addedPerson.GetComponent<Button>().onClick.AddListener(() => selectPerson(i));
+            int selected = i;
+            addedPerson.GetComponent<Button>().onClick.AddListener(() => selectPerson(selected));
 
             if (!peopleToShow[i].actionAvailable())
             {
@@ -97,6 +98,10 @@ public class CraftingSystem : MonoBehaviour
 
             peopleContainer.sizeDelta += new Vector2(0, 150);
         }
+    }
+    public void ShutWindow()
+    {
+        gameObject.SetActive(false);
     }
 
     void UpdateList()
@@ -115,10 +120,35 @@ public class CraftingSystem : MonoBehaviour
 
     public void selectPerson(int _selectedPerson)
     {
-        if (ResourceManager.Instance.wood.amount > 0) {
-            ResourceManager.Instance.wood.amount--;
-            peopleToShow[_selectedPerson].recharge = 30;
-            ResourceManager.Instance.populationLimit++;
+        System.Type t = peopleToShow[selectedPerson].GetType();
+        Debug.Log(t == typeof(Smith));
+        if (t == typeof(Cook))
+        {
+            if (ResourceManager.Instance.food.amount > 0)
+            {
+                ResourceManager.Instance.food.amount--;
+                peopleToShow[_selectedPerson].recharge = 30;
+                // Decrease Hunger
+            }
         }
+        else if (t== typeof(Carpenter))
+        {
+            if (ResourceManager.Instance.wood.amount > 0)
+            {
+                ResourceManager.Instance.wood.amount--;
+                peopleToShow[_selectedPerson].recharge = 30;
+                ResourceManager.Instance.populationLimit++;
+            }
+        }
+        else if (t == typeof(Smith))
+        {
+            if (ResourceManager.Instance.metal.amount > 0)
+            {
+                ResourceManager.Instance.metal.amount--;
+                peopleToShow[_selectedPerson].recharge = 30;
+                ResourceManager.Instance.gears.Add(new Gear(true));
+            }
+        }
+        
     }
 }

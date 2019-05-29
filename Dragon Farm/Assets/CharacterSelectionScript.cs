@@ -18,16 +18,16 @@ public class CharacterSelectionScript : MonoBehaviour
             switch (Random.Range(0, 4))
             {
                 case 0:
-                    people.Add(new Warrior("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3))));
+                    people.Add(new Warrior("Jon"));
                     break;
                 case 1:
-                    people.Add(new Cook("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3))));
+                    people.Add(new Cook("Jon"));
                     break;
                 case 2:
-                    people.Add(new Smith("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3))));
+                    people.Add(new Smith("Jon"));
                     break;
                 case 3:
-                    people.Add(new Carpenter("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3))));
+                    people.Add(new Carpenter("Jon"));
                     break;
             }
             choices[i].transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = people[i].personName;
@@ -50,16 +50,16 @@ public class CharacterSelectionScript : MonoBehaviour
         switch (Random.Range(0, 4))
         {
             case 0:
-                people[selectedPerson] = new Warrior("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3)));
+                people[selectedPerson] = new Warrior("Jon");
                 break;
             case 1:
-                people[selectedPerson] = new Cook("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3)));
+                people[selectedPerson] = new Cook("Jon");
                 break;
             case 2:
-                people[selectedPerson] = new Smith("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3)));
+                people[selectedPerson] = new Smith("Jon");
                 break;
             case 3:
-                people[selectedPerson] = new Carpenter("Jon", new Stats(Random.Range(0, 3), Random.Range(0, 3), Random.Range(0, 3)));
+                people[selectedPerson] = new Carpenter("Jon");
                 break;
         }
 

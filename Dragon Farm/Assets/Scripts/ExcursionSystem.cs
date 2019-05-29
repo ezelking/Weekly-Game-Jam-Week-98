@@ -55,17 +55,20 @@ public class ExcursionSystem : MonoBehaviour
 
     private void EnterPartyMemberValues(GameObject obj)
     {
-        Person p = new PersonwithGear(new Warrior("John Doe", new Stats(2, 4, 5)), "Strong Armor", new Stats(1, 0, 1));
-
+        Person p = new Warrior("John Smith");
+        
         Transform personInfo = obj.transform.GetChild(0);
         Transform gearInfo = obj.transform.GetChild(2);
+
+        personInfo.GetChild(1).GetComponent<TextMeshProUGUI>().text = p.personName;
+        personInfo.GetChild(2).GetComponent<TextMeshProUGUI>().text = p.GetStats().ToString();
 
         ToggleAdd(personInfo);
         ToggleAdd(gearInfo);
 
-        if (p.GetGears().Count > 0)
+        if (p.gears.Count > 0)
         {
-            foreach (Gear g in p.GetGears())
+            foreach (Gear g in p.gears)
             {
                 gearInfo.GetChild(1).GetComponent<TextMeshProUGUI>().text = g.name;
             }

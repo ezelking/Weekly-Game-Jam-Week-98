@@ -11,6 +11,7 @@ public sealed class ResourceManager
     public Resource food;
     public List<Dragon> dragons;
     public List<Person> people;
+    public List<Gear> gears;
 
     public int populationLimit;
 
@@ -21,9 +22,10 @@ public sealed class ResourceManager
         food = new Food(0);
 
         food.amount = 0;
-
+        populationLimit = 5;
         dragons = new List<Dragon>();
         people = new List<Person>();
+        gears = new List<Gear>();
 
     }
 

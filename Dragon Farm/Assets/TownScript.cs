@@ -6,6 +6,8 @@ public class TownScript : MonoBehaviour
 {
     public GameObject highlighed;
 
+    public GameObject craftingUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +34,7 @@ public class TownScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-
+            craftingUI.SetActive(true);
         }
     }
 }
