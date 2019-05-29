@@ -121,14 +121,14 @@ public class CraftingSystem : MonoBehaviour
     public void selectPerson(int _selectedPerson)
     {
         System.Type t = peopleToShow[selectedPerson].GetType();
-        Debug.Log(t == typeof(Smith));
+
         if (t == typeof(Cook))
         {
             if (ResourceManager.Instance.food.amount > 0)
             {
                 ResourceManager.Instance.food.amount--;
                 peopleToShow[_selectedPerson].recharge = 30;
-                // Decrease Hunger
+                HungerMeter.Instance.DecreaseHunger(peopleToShow[_selectedPerson].GetStats().health);
             }
         }
         else if (t== typeof(Carpenter))
