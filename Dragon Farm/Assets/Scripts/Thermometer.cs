@@ -52,7 +52,8 @@ public sealed class Thermometer
                 ResourceManager.Instance.KillDragons();
                 foreach (Transform UIelement in GameObject.Find("UI").transform)
                 {
-                    UIelement.gameObject.SetActive(!UIelement.gameObject.activeSelf);
+                    if (UIelement.name != "Lose")
+                        UIelement.gameObject.SetActive(false);
                 }
             }
         }

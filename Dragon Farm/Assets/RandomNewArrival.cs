@@ -19,7 +19,7 @@ public class RandomNewArrival : MonoBehaviour
         if (ResourceManager.Instance.people.Count < ResourceManager.Instance.populationLimit)
         {
             countDownTimer -= Time.deltaTime;
-            if (countDownTimer < 0)
+            if (countDownTimer < 0 && NoPopUpsOpen())
             {
                 newArrivalPopUp.SetActive(true);
                 countDownTimer = 30f;
@@ -30,5 +30,10 @@ public class RandomNewArrival : MonoBehaviour
         {
             p.Recharge();
         }
+    }
+
+    bool NoPopUpsOpen()
+    {
+        return !transform.FindChild("Lose").gameObject.activeSelf && !transform.FindChild("Excursion").gameObject.activeSelf && !transform.FindChild("Crafting").gameObject.activeSelf;
     }
 }

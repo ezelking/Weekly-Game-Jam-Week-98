@@ -4074,7 +4074,7 @@ GameObject:
   - component: {fileID: 1114665365}
   - component: {fileID: 1114665368}
   m_Layer: 5
-  m_Name: Excursion Pop-up
+  m_Name: Excursion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
