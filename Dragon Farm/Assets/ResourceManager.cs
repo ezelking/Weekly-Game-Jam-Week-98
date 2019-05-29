@@ -13,6 +13,8 @@ public sealed class ResourceManager
     public List<Person> people;
     public List<Gear> gears;
 
+    public int score;
+
     public int populationLimit;
 
     ResourceManager()
@@ -20,13 +22,12 @@ public sealed class ResourceManager
         wood = new Wood(0);
         metal = new Metal(0);
         food = new Food(0);
-
+        score = 0;
         food.amount = 0;
         populationLimit = 5;
         dragons = new List<Dragon>();
         people = new List<Person>();
         gears = new List<Gear>();
-
     }
 
     public static ResourceManager Instance
@@ -69,10 +70,7 @@ public sealed class ResourceManager
         if (r.GetType() == typeof(Dragon))
         {
             ((Dragon)r).Spawn();
-        } /*else if (r.GetType() == typeof(Person))
-        {
-            AddPerson((Person)r);
-        }*/
+        } 
         else if(r.GetType() == typeof(Metal))
         {
             AddResource((Metal)r);

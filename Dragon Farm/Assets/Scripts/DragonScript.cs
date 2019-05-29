@@ -56,6 +56,8 @@ public class DragonScript : MonoBehaviour
         {
             FireTimer += Time.deltaTime;
             Thermometer.Instance.IncreaseTemperature(strength * Time.deltaTime);
+            ResourceManager.Instance.score += 100;
+
             if (FireTimer > strength)
             {
                 rechargeTimer = 0;
