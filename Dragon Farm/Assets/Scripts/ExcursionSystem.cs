@@ -106,15 +106,18 @@ public class ExcursionSystem : MonoBehaviour
 
     public void selectPerson(int _selected)
     {
-        Color selected = new Color(0, 1, 0, 100f / 255f);
-        Color notSelected = new Color(1, 1, 1, 100f / 255f);
-        
-        if(selectedPerson >=0)
-        partyMemberContainer.GetChild(selectedPerson).GetComponent<Image>().color = notSelected;
+        if (partyMembers[_selected].actionAvailable())
+        {
+            Color selected = new Color(0, 1, 0, 100f / 255f);
+            Color notSelected = new Color(1, 1, 1, 100f / 255f);
 
-        selectedPerson = _selected;
+            if (selectedPerson >= 0)
+                partyMemberContainer.GetChild(selectedPerson).GetComponent<Image>().color = notSelected;
 
-        partyMemberContainer.GetChild(selectedPerson).GetComponent<Image>().color = selected;
+            selectedPerson = _selected;
+
+            partyMemberContainer.GetChild(selectedPerson).GetComponent<Image>().color = selected;
+        }
     }
 
     private void ToggleAdd(Transform info)
@@ -219,11 +222,12 @@ public class ExcursionSystem : MonoBehaviour
                     ResourceManager.Instance.AddReward(reward);
                 }
                 selectedExcursion = new Excursion(5, selectedExcursion.UIelement);
-                gameObject.SetActive(false);
             } else
             {
                 Debug.Log("Failed");
             }
+            partyMembers[selectedPerson].recharge = 30;
+            gameObject.SetActive(false);
         }
     }
 

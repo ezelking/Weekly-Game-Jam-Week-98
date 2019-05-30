@@ -172,7 +172,10 @@ public class CraftingSystem : MonoBehaviour
     }
     public void selectPerson(int _selectedPerson)
     {
-        selectedPerson = _selectedPerson;
+        if (!peopleToShow[_selectedPerson].actionAvailable())
+        {
+            selectedPerson = _selectedPerson;
+        }
         
     }
 }

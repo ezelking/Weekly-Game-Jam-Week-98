@@ -19,7 +19,7 @@ public class ControlResourceManager : MonoBehaviour
         int[] amounts = ResourceManager.Instance.GetResourceAmounts();
 
         amountDragons.text = amounts[0].ToString();
-        amountPeople.text = amounts[1].ToString();
+        amountPeople.text = amounts[1].ToString() + " / " + ResourceManager.Instance.populationLimit;
         amountFood.text = amounts[2].ToString();
         amountWood.text = amounts[3].ToString();
         amountMetal.text = amounts[4].ToString();
