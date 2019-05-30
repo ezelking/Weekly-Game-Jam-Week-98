@@ -158,7 +158,7 @@ public class CraftingSystem : MonoBehaviour
             {
                 ResourceManager.Instance.wood.amount--;
                 peopleToShow[selectedPerson].recharge = 30;
-                ResourceManager.Instance.populationLimit++;
+                ResourceManager.Instance.populationLimit += peopleToShow[selectedPerson].GetStats().strength ;
                 log.AddLogMessage("Population limit increased", true);
                 ShutWindow();
             }
@@ -169,10 +169,13 @@ public class CraftingSystem : MonoBehaviour
             {
                 ResourceManager.Instance.metal.amount--;
                 peopleToShow[selectedPerson].recharge = 30;
-                Gear newGear = new Gear(true);
-                ResourceManager.Instance.gears.Add(newGear);
+                for (int i = 0; i < peopleToShow[selectedPerson].GetStats().strength; i++)
+                {
+                    Gear newGear = new Gear(true);
+                    ResourceManager.Instance.gears.Add(newGear);
 
-                log.AddLogMessage("New Gear: " + newGear.name + " " + newGear.stats.ToString(), true);
+                    log.AddLogMessage("New Gear: " + newGear.name + " " + newGear.stats.ToString(), true);
+                }
                 ShutWindow();
             }
         }

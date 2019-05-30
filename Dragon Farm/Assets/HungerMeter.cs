@@ -46,7 +46,7 @@ public sealed class HungerMeter
     {
         if (a.hungerLevel < maxHunger)
         {
-            a.hungerLevel += Time.deltaTime;
+            a.hungerLevel += (Time.deltaTime * 0.25f);
             if (a.hungerLevel >= maxHunger)
             {
                 ResourceManager.Instance.KillDragons();
