@@ -70,6 +70,14 @@ public class ExcursionSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (selectedPerson >= 0)
+        {
+            partyStrength = partyMembers[selectedPerson].GetStats().health;
+        } else
+        {
+            partyStrength = 1;
+        }
+
         UpdateList();
     }
 
@@ -136,6 +144,11 @@ public class ExcursionSystem : MonoBehaviour
             Color selected = new Color(0, 1, 0, 100f / 255f);
             partyMemberContainer.GetChild(selectedPerson).GetComponent<Image>().color = selected;
         }
+
+        for (int i = 0; i < activeMissions.Count; i++)
+        {
+            ExcursionsContainer.GetChild(i).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = activeMissions[i].WinChance(partyStrength).ToString() + "%";
+        }
     }
     /*private void AddEmptyPartyMember()
     {
@@ -199,12 +212,18 @@ public class ExcursionSystem : MonoBehaviour
     {
         if (selectedPerson >= 0 && selectedExcursion.UIelement != null)
         {
-            foreach (Reward reward in selectedExcursion.rewards)
+            if (selectedExcursion.WinChance(partyStrength) > Random.Range(0, 100))
             {
-                ResourceManager.Instance.AddReward(reward);
+                foreach (Reward reward in selectedExcursion.rewards)
+                {
+                    ResourceManager.Instance.AddReward(reward);
+                }
+                selectedExcursion = new Excursion(5, selectedExcursion.UIelement);
+                gameObject.SetActive(false);
+            } else
+            {
+                Debug.Log("Failed");
             }
-            selectedExcursion = new Excursion(5, selectedExcursion.UIelement);
-            gameObject.SetActive(false);
         }
     }
 
@@ -256,9 +275,12 @@ public class ExcursionSystem : MonoBehaviour
 
         public GameObject UIelement;
 
-        public float WinChance(float partyStrength)
-        {            
-            return difficulty / partyStrength;
+        public decimal WinChance(float partyStrength)
+        {
+            decimal chance = decimal.Round((decimal)partyStrength / (decimal)difficulty, 2) * 100;
+            if (chance > 100)
+                chance = 100;
+            return chance;
         }
 
         public Excursion(int maxLevel, GameObject _UIelement)
