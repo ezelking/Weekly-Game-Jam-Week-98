@@ -20,6 +20,12 @@ TextureImporter:
   - first:
       213: 8431299936760919348
     second: Background 6_5
+  - first:
+      213: 3381247606041101193
+    second: Background 6_6
+  - first:
+      213: 2616702778850106354
+    second: Background 6_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -194,7 +200,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,7 +221,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -223,6 +229,48 @@ TextureImporter:
       bones: []
       spriteID: 9fa857ca82586b943bb75611964aca33
       internalID: 8431299936760919348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Background 6_6
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 576
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dca28b3b421cad46a1cd4fb8a89a4a9
+      internalID: 3381247606041101193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Background 6_7
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 544
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe141e017aae6854b98faa6c6a194d3c
+      internalID: 2616702778850106354
       vertices: []
       indices: 
       edges: []
