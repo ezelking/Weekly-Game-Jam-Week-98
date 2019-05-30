@@ -31,7 +31,7 @@ public abstract class Person
 
     public void Recharge()
     {
-        recharge -= Time.deltaTime;
+        recharge -= Time.deltaTime * GetStats().chargeSpeed;
     }
 
     public void AddGear(Gear gear)
@@ -156,27 +156,24 @@ class PersonwithGear : Decorator
 
 public struct Stats
 {
-    public int health { get; set; }
-    int strength { get; set; }
-    int intelligence { get; set; }
+    public int strength { get; set; }
+    public int chargeSpeed { get; set; }
 
     public Stats(bool newStats)
     {
-        health = Random.Range(1,3);
+        chargeSpeed = Random.Range(1,3);
         strength = Random.Range(1, 3);
-        intelligence = Random.Range(1, 3);
     }
     public static Stats operator +(Stats a, Stats b)
     {
-        a.health += b.health;
         a.strength += b.strength;
-        a.intelligence += b.intelligence;
+        a.chargeSpeed += b.chargeSpeed;
         return a;
     }
 
     public override string ToString()
     {
-        return health + " | " + strength + " | " + intelligence; 
+        return strength + " | " + chargeSpeed; 
     }
 }
 

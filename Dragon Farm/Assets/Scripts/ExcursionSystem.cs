@@ -72,7 +72,7 @@ public class ExcursionSystem : MonoBehaviour
     {
         if (selectedPerson >= 0)
         {
-            partyStrength = partyMembers[selectedPerson].GetStats().health;
+            partyStrength = partyMembers[selectedPerson].GetStats().strength;
         } else
         {
             partyStrength = 1;

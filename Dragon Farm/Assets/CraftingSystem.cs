@@ -145,7 +145,7 @@ public class CraftingSystem : MonoBehaviour
             {
                 ResourceManager.Instance.food.amount--;
                 peopleToShow[selectedPerson].recharge = 30;
-                HungerMeter.Instance.DecreaseHunger(peopleToShow[selectedPerson].GetStats().health);
+                HungerMeter.Instance.DecreaseHunger(peopleToShow[selectedPerson].GetStats().strength);
                 ShutWindow();
             }
         }
