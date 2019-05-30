@@ -8,8 +8,11 @@ public sealed class Thermometer
     private static Thermometer instance = null;
     private static readonly object padlock = new object();
 
+    float passedTime;
+
     Thermometer()
     {
+        passedTime = 0;
     }
 
     public static Thermometer Instance
@@ -46,7 +49,8 @@ public sealed class Thermometer
     {
         if (a.tempurature > minTemp)
         {
-            a.tempurature -= Time.deltaTime;
+            a.tempurature -= Time.deltaTime * (a.passedTime*0.01f);
+            a.passedTime += Time.deltaTime;
             if (a.tempurature <= minTemp)
             {
                 ResourceManager.Instance.KillDragons();
