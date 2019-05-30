@@ -8,6 +8,8 @@ public class TownScript : MonoBehaviour
 
     public GameObject craftingUI;
 
+    public GameObject UI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,8 +35,14 @@ public class TownScript : MonoBehaviour
     private void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(0))
-        {
+        { 
+            if (NoPopUpsOpen())
             craftingUI.SetActive(true);
         }
+    }
+
+    bool NoPopUpsOpen()
+    {
+        return !UI.transform.FindChild("Lose").gameObject.activeSelf && !UI.transform.FindChild("Excursion").gameObject.activeSelf && !UI.transform.FindChild("Crafting").gameObject.activeSelf && !UI.transform.FindChild("NewArrival").gameObject.activeSelf;
     }
 }

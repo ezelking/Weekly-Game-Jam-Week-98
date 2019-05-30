@@ -7,6 +7,8 @@ public class CaveScript : MonoBehaviour
     public GameObject highlighed;
     public GameObject excursionUI;
 
+    public GameObject UI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +35,13 @@ public class CaveScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            excursionUI.SetActive(true);
+            if (NoPopUpsOpen())
+                excursionUI.SetActive(true);
         }
+    }
+
+    bool NoPopUpsOpen()
+    {
+        return !UI.transform.FindChild("Lose").gameObject.activeSelf && !UI.transform.FindChild("Excursion").gameObject.activeSelf && !UI.transform.FindChild("Crafting").gameObject.activeSelf && !UI.transform.FindChild("NewArrival").gameObject.activeSelf;
     }
 }

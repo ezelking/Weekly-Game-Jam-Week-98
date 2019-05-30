@@ -34,6 +34,6 @@ public class RandomNewArrival : MonoBehaviour
 
     bool NoPopUpsOpen()
     {
-        return !transform.FindChild("Lose").gameObject.activeSelf && !transform.FindChild("Excursion").gameObject.activeSelf && !transform.FindChild("Crafting").gameObject.activeSelf;
+        return !transform.FindChild("Lose").gameObject.activeSelf && !transform.FindChild("Excursion").gameObject.activeSelf && !transform.FindChild("Crafting").gameObject.activeSelf && !transform.FindChild("NewArrival").gameObject.activeSelf;
     }
 }
