@@ -14,9 +14,10 @@ public class CraftingSystem : MonoBehaviour
     int selectedPerson;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         peopleToShow = new List<Person>();
+        Clear();
     }
 
     // Update is called once per frame

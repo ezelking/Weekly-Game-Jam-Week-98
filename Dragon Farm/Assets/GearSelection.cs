@@ -14,9 +14,15 @@ public class GearSelection : MonoBehaviour
     public RectTransform GearContainer;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-        selectedPerson = new Warrior("Henk");
+        foreach (Transform child in GearContainer)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        GearContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+
         for (int i = 0; i < ResourceManager.Instance.gears.Count; i++)
         {
             GameObject addedPartyMember = Instantiate(newGear, GearContainer);
@@ -27,13 +33,6 @@ public class GearSelection : MonoBehaviour
             addedPartyMember.GetComponentInChildren<Button>().onClick.AddListener(() => selectGear(temp));
             GearContainer.sizeDelta += new Vector2(0, 200);
         }
-        Debug.Log(selectedPerson.GetStats().ToString());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void ShutWindow()
@@ -45,9 +44,8 @@ public class GearSelection : MonoBehaviour
     {
         selectedPerson.AddGear(ResourceManager.Instance.gears[selectedGear]);
         ResourceManager.Instance.gears.RemoveAt(selectedGear);
-        Destroy(GearContainer.GetChild(selectedGear));
         selectedGear = -1;
-        Debug.Log(selectedPerson.GetStats().ToString());
+        ShutWindow();
     }
 
     public void selectGear(int _selectedGear)

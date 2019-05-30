@@ -15,20 +15,95 @@ public class ExcursionSystem : MonoBehaviour
     public GameObject newExcursion;
     public List<Person> partyMembers = new List<Person>();
 
+    public GearSelection gearSelection;
+
     public float partyStrength;
 
     private Excursion selectedExcursion;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        partyStrength = 1;
+    int selectedPerson;
 
+    // Start is called before the first frame update
+    void OnEnable()
+    {
+
+        Clear();
+        partyStrength = 1;
+        selectedPerson = -1;
         GenerateExcursion();
 
         transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Summit";
 
-        AddEmptyPartyMember();
+        List<Person> allPeople = ResourceManager.Instance.people;
+
+        foreach (Person p in allPeople)
+        {
+            if (p.GetType() == typeof(Warrior))
+            {
+                partyMembers.Add(p);
+            }
+        }
+        ShowList();
+        //AddEmptyPartyMember();
+    }
+
+    void Clear()
+    {
+        foreach (Transform child in partyMemberContainer)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        partyMemberContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+
+        partyMembers.Clear();
+
+        foreach (Transform child in ExcursionsContainer)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        ExcursionsContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+    }
+
+
+    // Update is called once per frame
+    void Update()
+    {
+        UpdateList();
+    }
+
+
+    void ShowList()
+    {
+        for (int i = 0; i < partyMembers.Count; i++)
+        {
+            GameObject addedPerson = Instantiate(newPartyMember, partyMemberContainer);
+            addedPerson.transform.localPosition += new Vector3(0, -partyMemberContainer.sizeDelta.y, 0);
+            int selected = i;
+            addedPerson.GetComponent<Button>().onClick.AddListener(() => selectPerson(selected));
+            Transform gearInfo = addedPerson.transform.GetChild(2);
+            gearInfo.GetComponentInChildren<Button>().onClick.AddListener(() => AddGear(selected));
+
+            if (!partyMembers[i].actionAvailable())
+            {
+                addedPerson.GetComponent<Image>().color = Color.grey;
+            }
+
+            partyMemberContainer.sizeDelta += new Vector2(0, 200);
+        }
+    }
+
+    public void selectPerson(int _selected)
+    {
+        Color selected = new Color(0, 1, 0, 100f / 255f);
+        Color notSelected = new Color(1, 1, 1, 100f / 255f);
+        
+        partyMemberContainer.GetChild(selectedPerson).GetComponent<Image>().color = notSelected;
+
+        selectedPerson = _selected;
+
+        partyMemberContainer.GetChild(selectedPerson).GetComponent<Image>().color = selected;
     }
 
     private void ToggleAdd(Transform info)
@@ -38,21 +113,46 @@ public class ExcursionSystem : MonoBehaviour
             child.gameObject.SetActive(!child.gameObject.activeSelf);
         }
     }
-
-    private void AddEmptyPartyMember()
+    void UpdateList()
+    {
+        for (int i = 0; i < partyMembers.Count; i++)
+        {
+            if (!partyMembers[i].actionAvailable())
+            {
+                partyMemberContainer.GetChild(i).GetComponent<Image>().color = Color.grey;
+            }
+            else
+            {
+                partyMemberContainer.GetChild(i).GetComponent<Image>().color = Color.white;
+            }
+        }
+    }
+    /*private void AddEmptyPartyMember()
     {
         GameObject addedPartyMember = Instantiate(newPartyMember, partyMemberContainer);
         addedPartyMember.transform.localPosition += new Vector3(0, -partyMemberContainer.sizeDelta.y, 0);
-
+        addedPartyMember.GetComponentInChildren<Button>().onClick.AddListener(() => selectedPerson(addedPartyMember));
         Transform personInfo = addedPartyMember.transform.GetChild(0);
         Transform gearInfo = addedPartyMember.transform.GetChild(2);
-        ToggleAdd(personInfo);
-        ToggleAdd(gearInfo);
 
         personInfo.GetComponentInChildren<Button>().onClick.AddListener(() => EnterPartyMemberValues(addedPartyMember));
+        gearInfo.GetComponentInChildren<Button>().onClick.AddListener(() => AddGear(addedPartyMember));
         partyMemberContainer.sizeDelta += new Vector2(0, 200);        
     }
+    /*public void SelectPerson()
+    {
+        Clear();
+        List<Person> allPeople = ResourceManager.Instance.people;
 
+        foreach (Person p in allPeople)
+        {
+            if (p.GetType() == typeof(Smith))
+            {
+                peopleToShow.Add(p);
+            }
+        }
+        ShowList();
+    }
     private void EnterPartyMemberValues(GameObject obj)
     {
         Person p = new Warrior("John Smith");
@@ -64,21 +164,14 @@ public class ExcursionSystem : MonoBehaviour
         personInfo.GetChild(2).GetComponent<TextMeshProUGUI>().text = p.GetStats().ToString();
 
         ToggleAdd(personInfo);
-        ToggleAdd(gearInfo);
-
-        if (p.gears.Count > 0)
-        {
-            foreach (Gear g in p.gears)
-            {
-                gearInfo.GetChild(1).GetComponent<TextMeshProUGUI>().text = g.name;
-            }
-        }
-        else
-        {
-            ToggleAdd(gearInfo);
-        }
 
         AddEmptyPartyMember();
+    }*/
+
+    private void AddGear(int _selected)
+    {
+        gearSelection.selectedPerson = partyMembers[_selected];
+        gearSelection.gameObject.SetActive(true);
     }
 
     private void GenerateExcursion()
@@ -94,12 +187,15 @@ public class ExcursionSystem : MonoBehaviour
 
     public void ConfirmSelection()
     {
-        foreach (Reward reward in selectedExcursion.rewards)
+        if (selectedPerson >= 0 && selectedExcursion.UIelement != null)
         {
-            ResourceManager.Instance.AddReward(reward);
+            foreach (Reward reward in selectedExcursion.rewards)
+            {
+                ResourceManager.Instance.AddReward(reward);
+            }
+            selectedExcursion = new Excursion(5, selectedExcursion.UIelement);
+            gameObject.SetActive(false);
         }
-        selectedExcursion = new Excursion(5, selectedExcursion.UIelement);
-        gameObject.SetActive(false);
     }
 
     public void selectExcursion(GameObject _selectedExcursion)
@@ -125,7 +221,7 @@ public class ExcursionSystem : MonoBehaviour
     {
         List<Excursion> excursions = new List<Excursion>();
 
-        for (int i = 0; i < Random.Range(1, 10); i++)
+        for (int i = 0; i < 5; i++)
         {
             ExcursionsContainer.sizeDelta += new Vector2(0, 200);
             GameObject addedExcursion = Instantiate(newExcursion, ExcursionsContainer);
