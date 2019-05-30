@@ -38,13 +38,35 @@ public abstract class Person
     {
         gears.Add(gear);
     }
+
+    public string GenerateName()
+    {
+        System.Random r = new System.Random();
+        int len = Random.Range(3, 10);
+
+        string[] consonants = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "l", "n", "p", "q", "r", "s", "sh", "zh", "t", "v", "w", "x" };
+        string[] vowels = { "a", "e", "i", "o", "u", "ae", "y" };
+        string Name = "";
+        Name += consonants[r.Next(consonants.Length)].ToUpper();
+        Name += vowels[r.Next(vowels.Length)];
+        int b = 2; //b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
+        while (b < len)
+        {
+            Name += consonants[r.Next(consonants.Length)];
+            b++;
+            Name += vowels[r.Next(vowels.Length)];
+            b++;
+        }
+
+        return Name;
+    }
 }
 
 public class Warrior: Person
 {
     public Warrior(string _name)
     {
-        personName = _name;
+        personName = GenerateName();
         originalStats = new Stats(true);
         recharge = 0;
         gears = new List<Gear>();
@@ -62,7 +84,7 @@ public class Carpenter : Person
 {
     public Carpenter(string _name)
     {
-        personName = _name;
+        personName = GenerateName();
         originalStats = new Stats(true);
         recharge = 0;
         gears = new List<Gear>();
@@ -78,7 +100,7 @@ public class Cook : Person
 {
     public Cook(string _name)
     {
-        personName = _name;
+        personName = GenerateName();
         originalStats = new Stats(true);
         recharge = 0;
         gears = new List<Gear>();
@@ -95,7 +117,7 @@ public class Smith : Person
 {
     public Smith(string _name)
     {
-        personName = _name;
+        personName = GenerateName();
         originalStats = new Stats(true);
         recharge = 0;
         gears = new List<Gear>();

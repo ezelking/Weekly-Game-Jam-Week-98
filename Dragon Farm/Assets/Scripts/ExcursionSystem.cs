@@ -22,6 +22,7 @@ public class ExcursionSystem : MonoBehaviour
     private Excursion selectedExcursion;
 
     int selectedPerson;
+    public LogController log;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -222,9 +223,10 @@ public class ExcursionSystem : MonoBehaviour
                     ResourceManager.Instance.AddReward(reward);
                 }
                 selectedExcursion = new Excursion(5, selectedExcursion.UIelement);
+                log.AddLogMessage("Mission Succeeded", true);
             } else
             {
-                Debug.Log("Failed");
+                log.AddLogMessage("Mission failed", false);
             }
             partyMembers[selectedPerson].recharge = 30;
             gameObject.SetActive(false);

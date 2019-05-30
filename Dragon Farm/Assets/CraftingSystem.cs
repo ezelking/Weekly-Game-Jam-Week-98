@@ -15,6 +15,8 @@ public class CraftingSystem : MonoBehaviour
     int selectedPerson;
     public GearSelection gearSelection;
 
+    public LogController log;
+
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -146,6 +148,7 @@ public class CraftingSystem : MonoBehaviour
                 ResourceManager.Instance.food.amount--;
                 peopleToShow[selectedPerson].recharge = 30;
                 HungerMeter.Instance.DecreaseHunger(peopleToShow[selectedPerson].GetStats().strength);
+                log.AddLogMessage("Hunger levels decreased", true);
                 ShutWindow();
             }
         }
@@ -156,6 +159,7 @@ public class CraftingSystem : MonoBehaviour
                 ResourceManager.Instance.wood.amount--;
                 peopleToShow[selectedPerson].recharge = 30;
                 ResourceManager.Instance.populationLimit++;
+                log.AddLogMessage("Population limit increased", true);
                 ShutWindow();
             }
         }
@@ -165,7 +169,10 @@ public class CraftingSystem : MonoBehaviour
             {
                 ResourceManager.Instance.metal.amount--;
                 peopleToShow[selectedPerson].recharge = 30;
-                ResourceManager.Instance.gears.Add(new Gear(true));
+                Gear newGear = new Gear(true);
+                ResourceManager.Instance.gears.Add(newGear);
+
+                log.AddLogMessage("New Gear: " + newGear.name + " " + newGear.stats.ToString(), true);
                 ShutWindow();
             }
         }
