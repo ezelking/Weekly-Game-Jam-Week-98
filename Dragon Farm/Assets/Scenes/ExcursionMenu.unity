@@ -4855,6 +4855,7 @@ MonoBehaviour:
   newPerson: {fileID: 2454967013468762881, guid: 588fab772c8118246ad0645fec423e7e,
     type: 3}
   peopleContainer: {fileID: 630959756}
+  gearSelection: {fileID: 388302774}
 --- !u!1 &1040086730
 GameObject:
   m_ObjectHideFlags: 0

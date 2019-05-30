@@ -99,6 +99,7 @@ public class ExcursionSystem : MonoBehaviour
         Color selected = new Color(0, 1, 0, 100f / 255f);
         Color notSelected = new Color(1, 1, 1, 100f / 255f);
         
+        if(selectedPerson >=0)
         partyMemberContainer.GetChild(selectedPerson).GetComponent<Image>().color = notSelected;
 
         selectedPerson = _selected;

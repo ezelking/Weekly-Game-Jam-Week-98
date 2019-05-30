@@ -12,6 +12,7 @@ public class CraftingSystem : MonoBehaviour
     public RectTransform peopleContainer;
 
     int selectedPerson;
+    public GearSelection gearSelection;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -82,7 +83,11 @@ public class CraftingSystem : MonoBehaviour
 
         peopleToShow.Clear();
     }
-
+    private void AddGear(int _selected)
+    {
+        gearSelection.selectedPerson = peopleToShow[_selected];
+        gearSelection.gameObject.SetActive(true);
+    }
     void ShowList()
     {
         for (int i = 0; i< peopleToShow.Count;i++)
@@ -91,6 +96,7 @@ public class CraftingSystem : MonoBehaviour
             addedPerson.transform.localPosition += new Vector3(0, -peopleContainer.sizeDelta.y, 0);
             int selected = i;
             addedPerson.GetComponent<Button>().onClick.AddListener(() => selectPerson(selected));
+            addedPerson.transform.GetChild(2).GetComponentInChildren<Button>().onClick.AddListener(() => AddGear(selected));
 
             if (!peopleToShow[i].actionAvailable())
             {

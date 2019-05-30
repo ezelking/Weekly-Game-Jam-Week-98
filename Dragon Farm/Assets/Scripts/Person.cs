@@ -46,7 +46,7 @@ public class Warrior: Person
     {
         personName = _name;
         originalStats = new Stats(true);
-        recharge = 30 -originalStats.health;
+        recharge = 0;
         gears = new List<Gear>();
     }
 
@@ -64,7 +64,7 @@ public class Carpenter : Person
     {
         personName = _name;
         originalStats = new Stats(true);
-        recharge = 30 - originalStats.health;
+        recharge = 0;
         gears = new List<Gear>();
     }
     public override void Spawn()
@@ -80,7 +80,7 @@ public class Cook : Person
     {
         personName = _name;
         originalStats = new Stats(true);
-        recharge = 30- originalStats.health;
+        recharge = 0;
         gears = new List<Gear>();
     }
     public override void Spawn()
@@ -97,7 +97,7 @@ public class Smith : Person
     {
         personName = _name;
         originalStats = new Stats(true);
-        recharge = 30 - originalStats.health;
+        recharge = 0;
         gears = new List<Gear>();
     }
     public override void Spawn()
