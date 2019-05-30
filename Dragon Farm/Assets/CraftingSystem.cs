@@ -17,6 +17,7 @@ public class CraftingSystem : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
+        selectedPerson = -1;
         peopleToShow = new List<Person>();
         Clear();
     }
@@ -123,9 +124,13 @@ public class CraftingSystem : MonoBehaviour
                 peopleContainer.GetChild(i).GetComponent<Image>().color = Color.white;
             }
         }
+        if (selectedPerson >= 0)
+        {
+            Color selected = new Color(0, 1, 0, 100f / 255f);
+            peopleContainer.GetChild(selectedPerson).GetComponent<Image>().color = selected;
+        }
     }
-
-    public void selectPerson(int _selectedPerson)
+    public void ConfirmSelection()
     {
         System.Type t = peopleToShow[selectedPerson].GetType();
 
@@ -134,17 +139,19 @@ public class CraftingSystem : MonoBehaviour
             if (ResourceManager.Instance.food.amount > 0)
             {
                 ResourceManager.Instance.food.amount--;
-                peopleToShow[_selectedPerson].recharge = 30;
-                HungerMeter.Instance.DecreaseHunger(peopleToShow[_selectedPerson].GetStats().health);
+                peopleToShow[selectedPerson].recharge = 30;
+                HungerMeter.Instance.DecreaseHunger(peopleToShow[selectedPerson].GetStats().health);
+                ShutWindow();
             }
         }
-        else if (t== typeof(Carpenter))
+        else if (t == typeof(Carpenter))
         {
             if (ResourceManager.Instance.wood.amount > 0)
             {
                 ResourceManager.Instance.wood.amount--;
-                peopleToShow[_selectedPerson].recharge = 30;
+                peopleToShow[selectedPerson].recharge = 30;
                 ResourceManager.Instance.populationLimit++;
+                ShutWindow();
             }
         }
         else if (t == typeof(Smith))
@@ -152,10 +159,15 @@ public class CraftingSystem : MonoBehaviour
             if (ResourceManager.Instance.metal.amount > 0)
             {
                 ResourceManager.Instance.metal.amount--;
-                peopleToShow[_selectedPerson].recharge = 30;
+                peopleToShow[selectedPerson].recharge = 30;
                 ResourceManager.Instance.gears.Add(new Gear(true));
+                ShutWindow();
             }
         }
+    }
+    public void selectPerson(int _selectedPerson)
+    {
+        selectedPerson = _selectedPerson;
         
     }
 }

@@ -127,6 +127,11 @@ public class ExcursionSystem : MonoBehaviour
                 partyMemberContainer.GetChild(i).GetComponent<Image>().color = Color.white;
             }
         }
+        if (selectedPerson >= 0)
+        {
+            Color selected = new Color(0, 1, 0, 100f / 255f);
+            partyMemberContainer.GetChild(selectedPerson).GetComponent<Image>().color = selected;
+        }
     }
     /*private void AddEmptyPartyMember()
     {
