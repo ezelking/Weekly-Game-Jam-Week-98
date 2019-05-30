@@ -85,6 +85,8 @@ public class ExcursionSystem : MonoBehaviour
             Transform gearInfo = addedPerson.transform.GetChild(2);
             gearInfo.GetComponentInChildren<Button>().onClick.AddListener(() => AddGear(selected));
 
+            addedPerson.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = partyMembers[i].personName;
+            addedPerson.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = partyMembers[i].GetStats().ToString();
             if (!partyMembers[i].actionAvailable())
             {
                 addedPerson.GetComponent<Image>().color = Color.grey;
@@ -126,6 +128,8 @@ public class ExcursionSystem : MonoBehaviour
             {
                 partyMemberContainer.GetChild(i).GetComponent<Image>().color = Color.white;
             }
+            partyMemberContainer.GetChild(i).transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = partyMembers[i].personName;
+            partyMemberContainer.GetChild(i).transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = partyMembers[i].GetStats().ToString();
         }
         if (selectedPerson >= 0)
         {

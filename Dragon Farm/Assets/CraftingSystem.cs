@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -98,6 +99,8 @@ public class CraftingSystem : MonoBehaviour
             int selected = i;
             addedPerson.GetComponent<Button>().onClick.AddListener(() => selectPerson(selected));
             addedPerson.transform.GetChild(2).GetComponentInChildren<Button>().onClick.AddListener(() => AddGear(selected));
+            addedPerson.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = peopleToShow[i].personName;
+            addedPerson.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = peopleToShow[i].GetStats().ToString();
 
             if (!peopleToShow[i].actionAvailable())
             {
@@ -123,6 +126,8 @@ public class CraftingSystem : MonoBehaviour
             {
                 peopleContainer.GetChild(i).GetComponent<Image>().color = Color.white;
             }
+            peopleContainer.GetChild(i).transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = peopleToShow[i].personName;
+            peopleContainer.GetChild(i).transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = peopleToShow[i].GetStats().ToString();
         }
         if (selectedPerson >= 0)
         {
